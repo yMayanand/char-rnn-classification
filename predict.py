@@ -19,5 +19,5 @@ model.eval()
 out = model.infer(inp)
 _, idx = torch.max(out, dim=1)
 idx = torch.topk(x, 1)[1].item()
-print(f'prediction for {args.name} is {all_categories[idx]}")
+print(f'prediction for {args.name} is {all_categories[idx]}')
 

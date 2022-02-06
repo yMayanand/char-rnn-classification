@@ -9,8 +9,8 @@ from tqdm import tqdm
 import torch
 from torch import nn, optim
 
-from .model import get_model
-from .data import *
+from model import get_model
+from data import *
 
 train_dl, val_dl = get_dl()
 

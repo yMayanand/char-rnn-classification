@@ -5,7 +5,7 @@ from model import get_model
 from data import *
 
 parser = argparse.ArgumentParser()
-parser.add_argument(("--name", default="hinton", help="enter the name to predict country of origin")
+parser.add_argument("--name", default="hinton", help="enter the name to predict country of origin")
 args = parser.parse_args()
 
 model = get_model(n_letters, 64, 128, n_categories)

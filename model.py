@@ -23,7 +23,7 @@ class RNN(nn.Module):
         out_padded, lengths = pad_packed_sequence(out_packed, batch_first=True)
         store_out = []
         for i, j in enumerate(lengths):
-            store.append(out_padded[i, j.item()-1])
+            store_out.append(out_padded[i, j.item()-1])
         out = torch.stack(store_out)
 
         out = self.fc(out)

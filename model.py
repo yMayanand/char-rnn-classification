@@ -8,7 +8,7 @@ class RNN(nn.Module):
         
         self.emb_size = emb_dim
         self.hidden_size = hidden_size
-        self.emb = nn.Embedding(vocab_len + 1, emb_dim, padding_idx=(vocab_len + 1))
+        self.emb = nn.Embedding(vocab_len + 1, emb_dim, padding_idx=vocab_len)
         self.lstm = nn.LSTM(emb_dim, hidden_size, 1, batch_first=True)
         self.fc = nn.Linear(hidden_size, output_size)
         self.softmax = nn.LogSoftmax(dim=1)

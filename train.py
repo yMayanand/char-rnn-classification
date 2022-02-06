@@ -44,6 +44,6 @@ for i in tqdm(range(args.epoch)):
         loss = criterion(out, labels)
         loss.backward()
         optimizer.step()
-    print(f'epoch: {i} models train_loss {loss.item()} val_acc {validate(model)}')
+    print(f'epoch: {i} models:- train_loss: {loss.item()} val_acc: {validate(model)}')
     
 torch.save(model.state_dict(), 'model.pt')

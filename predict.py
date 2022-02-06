@@ -1,6 +1,5 @@
 import torch
 import argparse
-from torch.nn.utils.rnn import pad_sequence,
 from model import get_model
 from data import *
 

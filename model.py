@@ -32,7 +32,7 @@ class RNN(nn.Module):
         bs = inp.shape[0]
         hidden = torch.zeros(1, bs, self.hidden_size)
         inp = self.emb(inp)
-        out, (h, c) = self.lstm(data, (hidden, hidden))
+        out, (h, c) = self.lstm(inp, (hidden, hidden))
         out = out[:, -1]
         out = self.fc(out)
         return out

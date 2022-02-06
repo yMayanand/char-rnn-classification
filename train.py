@@ -3,7 +3,7 @@ import time
 import random
 import math
 import argparse
-from tqdm import tqdm
+from tqdm.notebook import tqdm
 
 
 import torch

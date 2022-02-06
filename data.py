@@ -11,7 +11,7 @@ URL = 'https://download.pytorch.org/tutorial/data.zip'
 
 urllib.request.urlretrieve(URL, 'data.zip')
 
-with zipfile.ZipFile(path_to_zip_file, 'r') as zip_ref:
+with zipfile.ZipFile('data.zip', 'r') as zip_ref:
     zip_ref.extractall()
 
 def findFiles(path): return glob.glob(path)

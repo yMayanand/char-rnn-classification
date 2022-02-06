@@ -24,9 +24,10 @@ args = parser.parse_args()
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=1e-3)
 
-def validate():
+def validate(model):
     tot = 0
     corrects = 0
+    model.eval()
     for data, labels, seq_lens in val_dl:
         bs = data.shape[0]
         out = model(data, seq_lens)
@@ -43,4 +44,6 @@ for i in tqdm(range(args.epoch)):
         loss = criterion(out, labels)
         loss.backward()
         optimizer.step()
-    print(f'epoch: {i} models train_loss {loss.item()} val_acc {validate()}')
+    print(f'epoch: {i} models train_loss {loss.item()} val_acc {validate(model)}')
+    
+torch.save(model.state_dict(), 'model.pt')

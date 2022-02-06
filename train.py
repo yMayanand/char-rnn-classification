@@ -18,7 +18,7 @@ model = get_model(n_letters, 64, 128, n_categories)
 
 parser = argparse.ArgumentParser('arguments for training')
 
-parser.add_argument('--epoch', default=10, help='number of epochs to train')
+parser.add_argument('--epoch', default=10, help='number of epochs to train', type=int)
 args = parser.parse_args()
 
 criterion = nn.CrossEntropyLoss()

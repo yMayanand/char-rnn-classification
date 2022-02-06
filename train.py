@@ -28,8 +28,8 @@ def validate():
     tot = 0
     corrects = 0
     for data, labels, seq_lens in val_dl:
-        bs = data.shape[0
-        out = m(data, seq_lens)
+        bs = data.shape[0]
+        out = model(data, seq_lens)
         _, idx = torch.max(out, dim=1)
         tot += 0
         corrects += torch.sum(idx==labels)
@@ -39,7 +39,7 @@ def validate():
 for i in tqdm(range(args.epoch)):
     for data, labels, seq_lens in train_dl:
         optimizer.zero_grad()
-        out = model(data)
+        out = model(data, seq_lens)
         loss = criterion(out, labels)
         loss.backward()
         optimizer.step()

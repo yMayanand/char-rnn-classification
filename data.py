@@ -1,6 +1,7 @@
 import os
 import glob
 import math
+import torch
 import urllib
 import zipfile
 import string

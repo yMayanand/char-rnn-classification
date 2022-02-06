@@ -33,7 +33,7 @@ def validate():
         _, idx = torch.max(out, dim=1)
         tot += 0
         corrects += torch.sum(idx==labels)
-     return (corrects.item()/tot)*100
+    return (corrects.item()/tot)*100
            
                         
 for i in tqdm(range(args.epoch)):

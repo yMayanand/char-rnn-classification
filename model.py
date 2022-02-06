@@ -14,11 +14,11 @@ class RNN(nn.Module):
         self.fc = nn.Linear(hidden_size, output_size)
         self.softmax = nn.LogSoftmax(dim=1)
 
-    def forward(self, input, seq_lens):
-        bs = input.shape[0]
+    def forward(self, inp, seq_lens):
+        bs = inp.shape[0]
         hidden = torch.zeros(1, bs, self.hidden_size)
-        input = self.emb(input)
-        data = pack_padded_sequence(input, seq_lens, batch_first=True, enforce_sorted=False)
+        inp = self.emb(inp)
+        data = pack_padded_sequence(inp, seq_lens, batch_first=True, enforce_sorted=False)
         out_packed, (h, c) = self.lstm(data, (hidden, hidden))
         out_padded, lengths = pad_packed_sequence(out_packed, batch_first=True)
         store_out = []

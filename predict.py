@@ -14,8 +14,10 @@ seq = list(args.name)
 for i, j in enumerate(seq):
     seq[i] = all_letters.find(j)
 seq_len = len(seq)
-inp = torch.tensor(seq)
+inp = torch.tensor(seq).unsqueeze(0)
 model.eval()
 out = model.infer(inp)
 _, idx = torch.max(out, dim=1)
 idx = torch.topk(x, 1)[1].item()
+print(f'prediction for {args.name} is {all_categories[idx]})
+

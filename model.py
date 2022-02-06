@@ -28,6 +28,15 @@ class RNN(nn.Module):
 
         out = self.fc(out)
         return out
+    def infer(self, inp):
+        bs = inp.shape[0]
+        hidden = torch.zeros(1, bs, self.hidden_size)
+        inp = self.emb(inp)
+        out, (h, c) = self.lstm(data, (hidden, hidden))
+        out = out[:, -1]
+        out = self.fc(out)
+        return out
+        
 def get_model(vocab_len, emb_dim, n_hidden, n_categories):
     rnn = RNN(vocab_len, emb_dim, n_hidden, n_categories)
     return rnn

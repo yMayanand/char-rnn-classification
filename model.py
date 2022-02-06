@@ -20,7 +20,7 @@ class RNN(nn.Module):
         input = self.emb(input)
         data = pack_padded_sequence(input, seq_lens, batch_first=True, enforce_sorted=False)
         out_packed, (h, c) = self.lstm(data, (hidden, hidden))
-        out_padded, lengths = pad_packed_sequence(out, batch_first=True)
+        out_padded, lengths = pad_packed_sequence(out_packed, batch_first=True)
         store_out = []
         for i, j in enumerate(lengths):
             store.append(out_padded[i, j.item()-1])

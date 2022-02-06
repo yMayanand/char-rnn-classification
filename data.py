@@ -1,9 +1,18 @@
 import os
 import glob
 import math
+import urllib
+import zipfile
 import string
 import unicodedata
 import pandas as pd
+
+URL = 'https://download.pytorch.org/tutorial/data.zip'
+
+urllib.request.urlretrieve(URL, 'data.zip')
+
+with zipfile.ZipFile(path_to_zip_file, 'r') as zip_ref:
+    zip_ref.extractall()
 
 def findFiles(path): return glob.glob(path)
 

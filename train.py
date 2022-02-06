@@ -31,7 +31,7 @@ def validate():
         bs = data.shape[0]
         out = model(data, seq_lens)
         _, idx = torch.max(out, dim=1)
-        tot += 0
+        tot += bs
         corrects += torch.sum(idx==labels)
     return (corrects.item()/tot)*100
            

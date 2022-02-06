@@ -7,6 +7,7 @@ import zipfile
 import string
 import unicodedata
 import pandas as pd
+from torch.nn.utils.rnn import pad_sequence
 
 URL = 'https://download.pytorch.org/tutorial/data.zip'
 

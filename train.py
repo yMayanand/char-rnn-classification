@@ -37,6 +37,7 @@ if args.opt_kwargs != 'None':
 else:
     optimizer = optimizer(model.parameters(), lr=args.lr, weight_decay=args.wd, *eval(args.opt_kwargs))
 
+print(optimizer)
 
 def validate(model):
     tot = 0

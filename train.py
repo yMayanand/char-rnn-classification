@@ -14,8 +14,6 @@ from model import get_model
 from data import *
 
 
-model = get_model(n_letters, 128, 256, n_categories)
-
 parser = argparse.ArgumentParser('arguments for training')
 
 parser.add_argument('--epoch', default=10, help='number of epochs to train', type=int)
@@ -23,7 +21,12 @@ parser.add_argument('--wd', default=0, type=float, help='weight decay parameter'
 parser.add_argument('--lr', default=1e-3, type=float, help='controls learning rate of model')
 parser.add_argument('--bs', default=32, type=int, help='batch size for training')
 parser.add_argument('--opt', default='Adam', type=str, help='optimizer for training')
+parser.add_argument('--emb_size', default=32, type=int, help='embedding size')
+parser.add_argument('--hidden_size', default=64, type=int, help='hidden size')
 args = parser.parse_args()
+
+model = get_model(n_letters, args.emb_size, args.hidden_size, n_categories)
+
 
 criterion = nn.CrossEntropyLoss()
 train_dl, val_dl = get_dl(args.bs)

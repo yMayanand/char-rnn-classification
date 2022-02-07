@@ -12,7 +12,7 @@ class RNN(nn.Module):
         self.hidden_size = hidden_size
         self.emb = nn.Embedding(vocab_len + 1, emb_dim, padding_idx=vocab_len)
         self.lstm = nn.LSTM(emb_dim, hidden_size, 1, batch_first=True)
-        self.dropout = nn.Dropout(0.5)
+        self.dropout = nn.Dropout(0.7)
         self.fc = nn.Linear(hidden_size, output_size)
         
 

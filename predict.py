@@ -5,7 +5,7 @@ from data import *
 
 
 model = get_model(n_letters, 64, 128, n_categories)
-model.load_state_dict(torch.load('model.pt'))
+model.load_state_dict(torch.load('./checkpoints/model.pt'))
 
 
 def predict(name):

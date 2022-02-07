@@ -36,6 +36,8 @@ def validate(model):
         _, idx = torch.max(out, dim=1)
         tot += bs
         corrects += torch.sum(idx==labels)
+    print(corrects)
+    print(tot)
     return (corrects.item()/tot)*100
            
                         

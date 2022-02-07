@@ -34,7 +34,7 @@ class RNN(nn.Module):
         hidden = torch.zeros(1, bs, self.hidden_size)
         inp = F.relu(self.emb(inp))
         out, (h, c) = self.lstm(inp, (hidden, hidden))
-        out = torch.flatten(h, start_dim=1)
+        out = torch.flatten(h.permute(h, (1, 0, 2)), start_dim=1)
         out = F.relu(self.fc1(out))
         out = self.fc2(out)
         return out

@@ -22,7 +22,5 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--name", default="hinton", help="enter the name to predict country of origin")
     args = parser.parse_args()
-    seq = list(args.name)
-    predict(seq)
-    print(f'prediction for {args.name} is {all_categories[idx.item()]}')
+    print(f'prediction for {args.name} is {predict(args.name)}')
 

@@ -70,9 +70,12 @@ all_cat_dict = {key: value for value, key  in enumerate(all_categories)}
 form_labels(df)
 
 df = df.sample(frac=1).reset_index(drop=True)
+df = df.sample(frac=1).reset_index(drop=True)
+df = df.sample(frac=1).reset_index(drop=True)
 
-train_df = df.iloc[:math.ceil(len(df)*0.8),:].sample(frac=1).reset_index(drop=True)
-val_df = df.iloc[math.ceil(len(df)*0.8):,:].reset_index(drop=True)
+
+train_df = df.iloc[:math.ceil(len(df)*0.9),:].sample(frac=1).reset_index(drop=True)
+val_df = df.iloc[math.ceil(len(df)*0.9):,:].reset_index(drop=True)
 
 class Dataset:
     def __init__(self, df):

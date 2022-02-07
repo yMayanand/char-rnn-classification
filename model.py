@@ -22,20 +22,19 @@ class RNN(nn.Module):
         inp = F.relu(self.emb(inp))
         data = pack_padded_sequence(inp, seq_lens, batch_first=True, enforce_sorted=False)
         out_packed, (h, c) = self.lstm(data, (hidden, hidden))
-        out_padded, lengths = pad_packed_sequence(out_packed, batch_first=True)
-        store_out = []
-        for i, j in enumerate(lengths):
-            store_out.append(out_padded[i, j.item()-1])
-        out = torch.stack(store_out)
+        out_padded, lengths = pad_packed_sequence(h, batch_first=True)
+        out = torch.flatten(out_padded, start_dim=1)
         out = F.relu(self.fc1(out))
         out = self.fc2(out)
         return out
+
+
     def infer(self, inp):
         bs = inp.shape[0]
         hidden = torch.zeros(1, bs, self.hidden_size)
         inp = F.relu(self.emb(inp))
         out, (h, c) = self.lstm(inp, (hidden, hidden))
-        out = out[:, -1]
+        out = torch.flatten(h, start_dim=1)
         out = F.relu(self.fc1(out))
         out = self.fc2(out)
         return out

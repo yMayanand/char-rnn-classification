@@ -1,3 +1,5 @@
 *.pt
 .ipynb_checkpoints
 __pycache__
+*.zip
+*.txt

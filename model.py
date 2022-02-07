@@ -23,7 +23,7 @@ class RNN(nn.Module):
         data = pack_padded_sequence(inp, seq_lens, batch_first=True, enforce_sorted=False)
         out_packed, (h, c) = self.lstm(data, (hidden, hidden))
         #out_padded, lengths = pad_packed_sequence(h, batch_first=True)
-        out = torch.flatten(h, start_dim=1)
+        out = torch.flatten(torch.permute(h, (1, 0, 2)), start_dim=1)
         out = F.relu(self.fc1(out))
         out = self.fc2(out)
         return out

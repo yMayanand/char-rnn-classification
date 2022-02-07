@@ -18,7 +18,7 @@ class RNN(nn.Module):
     def forward(self, inp, seq_lens):
         bs = inp.shape[0]
         hidden = torch.zeros(1, bs, self.hidden_size)
-        inp = F.relu(self.emb(inp))
+        inp = self.emb(inp)
         data = pack_padded_sequence(inp, seq_lens, batch_first=True, enforce_sorted=False)
         out_packed, (h, c) = self.lstm(data, (hidden, hidden))
         #out_padded, lengths = pad_packed_sequence(h, batch_first=True)
@@ -30,7 +30,7 @@ class RNN(nn.Module):
     def infer(self, inp):
         bs = inp.shape[0]
         hidden = torch.zeros(1, bs, self.hidden_size)
-        inp = F.relu(self.emb(inp))
+        inp = self.emb(inp)
         out, (h, c) = self.lstm(inp, (hidden, hidden))
         out = torch.flatten(torch.permute(h, (1, 0, 2)), start_dim=1)
         out = self.fc(out)

@@ -12,8 +12,7 @@ class RNN(nn.Module):
         self.hidden_size = hidden_size
         self.emb = nn.Embedding(vocab_len + 1, emb_dim, padding_idx=vocab_len)
         self.lstm = nn.LSTM(emb_dim, hidden_size, 1, batch_first=True)
-        self.fc1 = nn.Linear(hidden_size, 256)
-        self.fc2 = nn.Linear(256, output_size)
+        self.fc = nn.Linear(hidden_size, output_size)
         
 
     def forward(self, inp, seq_lens):
@@ -24,8 +23,7 @@ class RNN(nn.Module):
         out_packed, (h, c) = self.lstm(data, (hidden, hidden))
         #out_padded, lengths = pad_packed_sequence(h, batch_first=True)
         out = torch.flatten(torch.permute(h, (1, 0, 2)), start_dim=1)
-        out = F.relu(self.fc1(out))
-        out = self.fc2(out)
+        out = self.fc(out)
         return out
 
 
@@ -35,8 +33,7 @@ class RNN(nn.Module):
         inp = F.relu(self.emb(inp))
         out, (h, c) = self.lstm(inp, (hidden, hidden))
         out = torch.flatten(torch.permute(h, (1, 0, 2)), start_dim=1)
-        out = F.relu(self.fc1(out))
-        out = self.fc2(out)
+        out = self.fc(out)
         return out
         
 def get_model(vocab_len, emb_dim, n_hidden, n_categories):

@@ -27,7 +27,7 @@ args = parser.parse_args()
 
 criterion = nn.CrossEntropyLoss()
 train_dl, val_dl = get_dl(args.bs)
-optimizer = getattr(optim, args.opt, default='Adam')
+optimizer = getattr(optim, args.opt, optim.Adam)
 optimizer = optimizer(model.parameters(), lr=args.lr)
 
 def validate(model):

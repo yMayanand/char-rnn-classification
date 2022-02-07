@@ -101,10 +101,10 @@ def cust_collate(batch):
     return xs, torch.stack(ys), zs
 
 
-def get_dl():
+def get_dl(bs=32):
     train_ds = Dataset(train_df)
     val_ds = Dataset(val_df)
-    train_dl = torch.utils.data.DataLoader(train_ds, batch_size=32, collate_fn=cust_collate)
-    val_dl = torch.utils.data.DataLoader(val_ds, batch_size=32, collate_fn=cust_collate)
+    train_dl = torch.utils.data.DataLoader(train_ds, batch_size=bs, collate_fn=cust_collate)
+    val_dl = torch.utils.data.DataLoader(val_ds, batch_size=bs, collate_fn=cust_collate)
 
     return train_dl, val_dl

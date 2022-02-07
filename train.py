@@ -46,4 +46,4 @@ for i in tqdm(range(args.epoch)):
         optimizer.step()
     print(f'epoch: {i} models:- train_loss: {loss.item()} val_acc: {validate(model)}')
     
-torch.save(model.state_dict(), 'model.pt')
+torch.save(model.state_dict(), './checkpoints/model.pt')

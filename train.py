@@ -13,7 +13,7 @@ from model import get_model
 from data import *
 
 
-model = get_model(n_letters, 64, 64, n_categories)
+model = get_model(n_letters, 32, 40, n_categories)
 
 parser = argparse.ArgumentParser('arguments for training')
 

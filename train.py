@@ -22,7 +22,7 @@ parser.add_argument('--epoch', default=10, help='number of epochs to train', typ
 #parser.add_argument('--wd', default=0, type=float, help='weight decay parameter')
 parser.add_argument('--lr', default=1e-3, type=float, help='controls learning rate of model')
 parser.add_argument('--bs', default=32, type=int, help='batch size for training')
-parser.add_argument('--opt', default='Adam', type=string, help='optimizer for training')
+parser.add_argument('--opt', default='Adam', type=str, help='optimizer for training')
 args = parser.parse_args()
 
 criterion = nn.CrossEntropyLoss()

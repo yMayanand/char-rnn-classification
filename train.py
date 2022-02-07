@@ -19,7 +19,7 @@ model = get_model(n_letters, 32, 40, n_categories)
 parser = argparse.ArgumentParser('arguments for training')
 
 parser.add_argument('--epoch', default=10, help='number of epochs to train', type=int)
-#parser.add_argument('--wd', default=0, type=float, help='weight decay parameter')
+parser.add_argument('--wd', default=0, type=float, help='weight decay parameter')
 parser.add_argument('--lr', default=1e-3, type=float, help='controls learning rate of model')
 parser.add_argument('--bs', default=32, type=int, help='batch size for training')
 parser.add_argument('--opt', default='Adam', type=str, help='optimizer for training')
@@ -28,7 +28,7 @@ args = parser.parse_args()
 criterion = nn.CrossEntropyLoss()
 train_dl, val_dl = get_dl(args.bs)
 optimizer = getattr(optim, args.opt, optim.Adam)
-optimizer = optimizer(model.parameters(), lr=args.lr)
+optimizer = optimizer(model.parameters(), lr=args.lr, weight_decay=args.wd)
 
 def validate(model):
     tot = 0

@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
 
 class RNN(nn.Module):
@@ -18,7 +19,7 @@ class RNN(nn.Module):
     def forward(self, inp, seq_lens):
         bs = inp.shape[0]
         hidden = torch.zeros(1, bs, self.hidden_size)
-        inp = self.emb(inp)
+        inp = F.relu(self.emb(inp))
         data = pack_padded_sequence(inp, seq_lens, batch_first=True, enforce_sorted=False)
         out_packed, (h, c) = self.lstm(data, (hidden, hidden))
         out_padded, lengths = pad_packed_sequence(out_packed, batch_first=True)
@@ -26,16 +27,16 @@ class RNN(nn.Module):
         for i, j in enumerate(lengths):
             store_out.append(out_padded[i, j.item()-1])
         out = torch.stack(store_out)
-        out = self.fc1(out)
+        out = F.relu(self.fc1(out))
         out = self.fc2(out)
         return out
     def infer(self, inp):
         bs = inp.shape[0]
         hidden = torch.zeros(1, bs, self.hidden_size)
-        inp = self.emb(inp)
+        inp = F.relu(self.emb(inp))
         out, (h, c) = self.lstm(inp, (hidden, hidden))
         out = out[:, -1]
-        out = self.fc1(out)
+        out = F.relu(self.fc1(out))
         out = self.fc2(out)
         return out
         

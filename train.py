@@ -32,7 +32,7 @@ model = get_model(n_letters, args.emb_size, args.hidden_size, n_categories)
 criterion = nn.CrossEntropyLoss()
 train_dl, val_dl = get_dl(args.bs)
 optimizer = getattr(optim, args.opt, optim.Adam)
-if args.opt_kwargs != 'None':
+if args.opt_kwargs == 'None':
     optimizer = optimizer(model.parameters(), lr=args.lr, weight_decay=args.wd)
 else:
     optimizer = optimizer(model.parameters(), lr=args.lr, weight_decay=args.wd, *eval(args.opt_kwargs))

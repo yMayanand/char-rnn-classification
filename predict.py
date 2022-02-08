@@ -29,6 +29,4 @@ def predict(name):
     _, idx = torch.max(out, dim=1)
     return all_categories[idx.item()]
 if __name__ == '__main__':
-    parser.add_argument("--name", default="hinton", help="enter the name to predict country of origin")
     print(f'prediction for {args.name} is {predict(args.name)}')
-

@@ -24,10 +24,12 @@ parser.add_argument('--opt', default='Adam', type=str, help='optimizer for train
 parser.add_argument('--emb_size', default=32, type=int, help='embedding size')
 parser.add_argument('--hidden_size', default=64, type=int, help='hidden size')
 parser.add_argument('--ar', default=0, type=float, help='activity regularisation constant')
+parser.add_argument('--dropout', default=0, type=float, help='dropout value')
+
 
 args = parser.parse_args()
 
-model = get_model(n_letters, args.emb_size, args.hidden_size, n_categories)
+model = get_model(n_letters, args.emb_size, args.hidden_size, n_categories, args.dropout)
 
 
 criterion = nn.CrossEntropyLoss()

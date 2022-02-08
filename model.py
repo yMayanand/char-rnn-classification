@@ -5,7 +5,7 @@ from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
 
 class RNN(nn.Module):
     def __init__(self, vocab_len, emb_dim, 
-                 hidden_size, output_size):
+                 hidden_size, output_size, dropout=0.):
         super(RNN, self).__init__()
         
         self.emb_size = emb_dim
@@ -13,7 +13,7 @@ class RNN(nn.Module):
         self.emb = nn.Embedding(vocab_len + 1, emb_dim, padding_idx=vocab_len)
         self.lstm = nn.LSTM(emb_dim, hidden_size, 1, batch_first=True)
         #self.bn = nn.BatchNorm1d(hidden_size)
-        self.dropout = nn.Dropout(0.3)
+        self.dropout = nn.Dropout(dropout)
         self.fc = nn.Linear(hidden_size, output_size)
         
 

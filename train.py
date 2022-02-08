@@ -23,6 +23,8 @@ parser.add_argument('--bs', default=32, type=int, help='batch size for training'
 parser.add_argument('--opt', default='Adam', type=str, help='optimizer for training')
 parser.add_argument('--emb_size', default=32, type=int, help='embedding size')
 parser.add_argument('--hidden_size', default=64, type=int, help='hidden size')
+parser.add_argument('--ar', default=0, type=float, help='activity regularisation constant')
+
 args = parser.parse_args()
 
 model = get_model(n_letters, args.emb_size, args.hidden_size, n_categories)
@@ -57,7 +59,7 @@ for i in tqdm(range(args.epoch)):
     for data, labels, seq_lens in train_dl:
         optimizer.zero_grad()
         out = model(data, seq_lens)
-        loss = criterion(out, labels)
+        loss = criterion(out[0], labels) + torch.sum(torch.pow(out[1], 2))
         loss.backward()
         optimizer.step()
         scheduler.step()

@@ -47,7 +47,7 @@ def validate(model):
     for data, labels, seq_lens in val_dl:
         bs = data.shape[0]
         out, acts  = model(data, seq_lens)
-        _, idx = torch.max(out[0], dim=1)
+        _, idx = torch.max(out, dim=1)
         tot += bs
         corrects += torch.sum(idx==labels)
     print(corrects)

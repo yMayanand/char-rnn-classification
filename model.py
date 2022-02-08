@@ -38,7 +38,7 @@ class RNN(nn.Module):
         out = torch.flatten(torch.permute(h, (1, 0, 2)), start_dim=1)
         out = self.dropout(out)
         out = self.fc(out)
-        return out, acts
+        return out
         
 def get_model(vocab_len, emb_dim, n_hidden, n_categories, dropout):
     rnn = RNN(vocab_len, emb_dim, n_hidden, n_categories, dropout=dropout)

@@ -8,6 +8,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--emb_size', default=32, type=int, help='embedding size')
 parser.add_argument('--hidden_size', default=64, type=int, help='hidden size')
 parser.add_argument('--ar', default=0, type=float, help='activity regularisation constant')
+parser.add_argument("--name", default="hinton", help="enter the name to predict country of origin")
 parser.add_argument('--dropout', default=0, type=float, help='dropout value')
 args = parser.parse_args()
 
@@ -28,8 +29,6 @@ def predict(name):
     _, idx = torch.max(out, dim=1)
     return all_categories[idx.item()]
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
     parser.add_argument("--name", default="hinton", help="enter the name to predict country of origin")
-    args = parser.parse_args()
     print(f'prediction for {args.name} is {predict(args.name)}')
 

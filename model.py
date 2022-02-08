@@ -40,6 +40,6 @@ class RNN(nn.Module):
         out = self.fc(out)
         return out, acts
         
-def get_model(vocab_len, emb_dim, n_hidden, n_categories):
-    rnn = RNN(vocab_len, emb_dim, n_hidden, n_categories)
+def get_model(vocab_len, emb_dim, n_hidden, n_categories, dropout):
+    rnn = RNN(vocab_len, emb_dim, n_hidden, n_categories, dropout=dropout)
     return rnn

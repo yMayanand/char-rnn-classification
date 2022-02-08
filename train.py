@@ -59,7 +59,7 @@ for i in tqdm(range(args.epoch)):
     for data, labels, seq_lens in train_dl:
         optimizer.zero_grad()
         out = model(data, seq_lens)
-        loss = criterion(out[0], labels) + torch.sum(torch.pow(out[1], 2))
+        loss = criterion(out[0], labels) + args.ar*torch.mean(torch.pow(out[1], 2))
         loss.backward()
         optimizer.step()
         scheduler.step()

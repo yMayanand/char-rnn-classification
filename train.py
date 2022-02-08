@@ -23,7 +23,6 @@ parser.add_argument('--bs', default=32, type=int, help='batch size for training'
 parser.add_argument('--opt', default='Adam', type=str, help='optimizer for training')
 parser.add_argument('--emb_size', default=32, type=int, help='embedding size')
 parser.add_argument('--hidden_size', default=64, type=int, help='hidden size')
-parser.add_argument('--opt_kwargs', default='None', type=str, help='optional optimizer args')
 args = parser.parse_args()
 
 model = get_model(n_letters, args.emb_size, args.hidden_size, n_categories)
@@ -32,12 +31,12 @@ model = get_model(n_letters, args.emb_size, args.hidden_size, n_categories)
 criterion = nn.CrossEntropyLoss()
 train_dl, val_dl = get_dl(args.bs)
 optimizer = getattr(optim, args.opt, optim.Adam)
-if args.opt_kwargs == 'None':
-    optimizer = optimizer(model.parameters(), lr=args.lr, weight_decay=args.wd)
+if optimizer.__name__ == 'SGD':
+    optimizer = optimizer(model.parameters(), lr=args.lr, weight_decay=args.wd, momentum=0.9)
 else:
-    optimizer = optimizer(model.parameters(), lr=args.lr, weight_decay=args.wd, *eval(args.opt_kwargs))
+    optimizer = optimizer(model.parameters(), lr=args.lr, weight_decay=args.wd)
 
-print(optimizer)
+scheduler = optim.lr_scheduler.OneCycleLR(optimizer, max_lr=args.lr, steps_per_epoch=len(train_dl), epochs=args.epoch)
 
 def validate(model):
     tot = 0
@@ -61,6 +60,7 @@ for i in tqdm(range(args.epoch)):
         loss = criterion(out, labels)
         loss.backward()
         optimizer.step()
+        scheduler.step()
     print(f'epoch: {i} models:- train_loss: {loss.item()} val_acc: {validate(model)}')
     
 torch.save(model.state_dict(), './checkpoints/model.pt')

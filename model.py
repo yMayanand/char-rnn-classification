@@ -15,11 +15,11 @@ class RNN(nn.Module):
         #self.bn = nn.BatchNorm1d(hidden_size)
         self.dropout = nn.Dropout(dropout)
         self.fc = nn.Linear(hidden_size, output_size)
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         
-
     def forward(self, inp, seq_lens):
         bs = inp.shape[0]
-        hidden = torch.zeros(1, bs, self.hidden_size)
+        hidden = torch.zeros(1, bs, self.hidden_size).to(self.device)
         inp = self.emb(inp)
         data = pack_padded_sequence(inp, seq_lens, batch_first=True, enforce_sorted=False)
         out_packed, (h, c) = self.lstm(data, (hidden, hidden))
@@ -28,7 +28,6 @@ class RNN(nn.Module):
         out = self.dropout(out)
         out = self.fc(out)
         return out, out_padded
-
 
     def infer(self, inp):
         bs = inp.shape[0]

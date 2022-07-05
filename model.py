@@ -14,7 +14,10 @@ class RNN(nn.Module):
         self.lstm = nn.LSTM(emb_dim, hidden_size, 1, batch_first=True)
         #self.bn = nn.BatchNorm1d(hidden_size)
         self.dropout = nn.Dropout(dropout)
-        self.fc = nn.Linear(hidden_size, output_size)
+        self.fc = nn.Linear(hidden_size, hidden_size)
+        self.classifer = nn.Linear(hidden_size, output_size)
+        self.relu = nn.ReLU()
+        
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         
     def forward(self, inp, seq_lens):
@@ -26,7 +29,8 @@ class RNN(nn.Module):
         out_padded, lengths = pad_packed_sequence(out_packed, batch_first=True)
         out = torch.flatten(torch.permute(h, (1, 0, 2)), start_dim=1)
         out = self.dropout(out)
-        out = self.fc(out)
+        out = self.relU(self.fc(out))
+        out = self.classifier(out)
         return out, out_padded
 
     def infer(self, inp):

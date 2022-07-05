@@ -2,8 +2,6 @@ import time
 import random
 import math
 import argparse
-from tqdm import tqdm
-
 
 import torch
 from torch import nn, optim
@@ -63,7 +61,7 @@ if optimizer.__name__ == 'SGD':
 else:
     optimizer = optimizer(model.parameters(), lr=args.lr, weight_decay=args.wd)
 
-scheduler = optim.lr_scheduler.OneCycleLR(optimizer, max_lr=args.lr, steps_per_epoch=len(train_dl), epochs=args.epoch)
+#scheduler = optim.lr_scheduler.OneCycleLR(optimizer, max_lr=args.lr, steps_per_epoch=len(train_dl), epochs=args.epoch)
 
 def validate(model):
     tot = 0
@@ -79,12 +77,12 @@ def validate(model):
         _, idx = torch.max(out, dim=1)
         tot += bs
         corrects += torch.sum(idx==labels).item()
-    print(f"{corrects}/{tot}")
+    print(f"correct/total: {corrects}/{tot}")
     
     return (corrects/tot)*100
            
                         
-for i in tqdm(range(args.epoch)):
+for i in range(args.epoch):
     model.train()
     for data, labels, seq_lens in train_dl:
         data = data.to(device)
@@ -97,7 +95,7 @@ for i in tqdm(range(args.epoch)):
         loss = criterion(out[0], labels) + args.ar*torch.mean(torch.pow(out[1], 2))
         loss.backward()
         optimizer.step()
-        scheduler.step()
+        #scheduler.step()
     print(f'epoch: {i} models:- train_loss: {loss.item()} val_acc: {validate(model)}')
     
 torch.save(model.state_dict(), './checkpoints/model.pt')

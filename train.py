@@ -2,7 +2,7 @@ import time
 import random
 import math
 import argparse
-from tqdm.notebook import tqdm
+from tqdm import tqdm
 
 
 import torch
@@ -48,22 +48,25 @@ def validate(model):
     for data, labels, seq_lens in val_dl:
         data = data.to(device)
         labels = labels.to(device)
+        seq_lens = torch.tensor(seq_lens).to('cpu')
         
         bs = data.shape[0]
         out, acts  = model(data, seq_lens)
         _, idx = torch.max(out, dim=1)
         tot += bs
-        corrects += torch.sum(idx==labels)
-    print(corrects)
-    print(tot)
+        corrects += torch.sum(idx==labels).item()
+    print(f"{corrects}/{tot}")
+    
     return (corrects.item()/tot)*100
            
                         
 for i in tqdm(range(args.epoch)):
+    model.train()
     for data, labels, seq_lens in train_dl:
         data = data.to(device)
         labels = labels.to(device)
-        print(type(seq_lens)
+        seq_lens = torch.tensor(seq_lens).to('cpu')
+        
         
         optimizer.zero_grad()
         out = model(data, seq_lens)

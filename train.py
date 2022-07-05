@@ -63,6 +63,7 @@ for i in tqdm(range(args.epoch)):
     for data, labels, seq_lens in train_dl:
         data = data.to(device)
         labels = labels.to(device)
+        print(type(seq_lens)
         
         optimizer.zero_grad()
         out = model(data, seq_lens)

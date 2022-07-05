@@ -15,7 +15,7 @@ class RNN(nn.Module):
         #self.bn = nn.BatchNorm1d(hidden_size)
         self.dropout = nn.Dropout(dropout)
         self.fc = nn.Linear(hidden_size, hidden_size)
-        self.classifer = nn.Linear(hidden_size, output_size)
+        self.classifier = nn.Linear(hidden_size, output_size)
         self.relu = nn.ReLU()
         
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -29,7 +29,7 @@ class RNN(nn.Module):
         out_padded, lengths = pad_packed_sequence(out_packed, batch_first=True)
         out = torch.flatten(torch.permute(h, (1, 0, 2)), start_dim=1)
         out = self.dropout(out)
-        out = self.relU(self.fc(out))
+        out = self.relu(self.fc(out))
         out = self.classifier(out)
         return out, out_padded
 
@@ -41,6 +41,8 @@ class RNN(nn.Module):
         out = torch.flatten(torch.permute(h, (1, 0, 2)), start_dim=1)
         out = self.dropout(out)
         out = self.fc(out)
+        out = self.relu(out)
+        out = self.classifier(out)
         return out
         
 def get_model(vocab_len, emb_dim, n_hidden, n_categories, dropout):

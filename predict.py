@@ -5,8 +5,8 @@ from data import *
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--emb_size', default=32, type=int, help='embedding size')
-parser.add_argument('--hidden_size', default=64, type=int, help='hidden size')
+parser.add_argument('--emb_size', default=512, type=int, help='embedding size')
+parser.add_argument('--hidden_size', default=512, type=int, help='hidden size')
 parser.add_argument("--name", default="hinton", help="enter the name to predict country of origin")
 parser.add_argument('--dropout', default=0, type=float, help='dropout value')
 args = parser.parse_args()

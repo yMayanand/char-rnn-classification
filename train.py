@@ -57,7 +57,7 @@ def validate(model):
         corrects += torch.sum(idx==labels).item()
     print(f"{corrects}/{tot}")
     
-    return (corrects.item()/tot)*100
+    return (corrects/tot)*100
            
                         
 for i in tqdm(range(args.epoch)):

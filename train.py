@@ -27,8 +27,9 @@ parser.add_argument('--dropout', default=0, type=float, help='dropout value')
 
 args = parser.parse_args()
 
-model = get_model(n_letters, args.emb_size, args.hidden_size, n_categories, args.dropout)
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
+model = get_model(n_letters, args.emb_size, args.hidden_size, n_categories, args.dropout).to*device
 
 criterion = nn.CrossEntropyLoss()
 train_dl, val_dl = get_dl(args.bs)
@@ -45,6 +46,9 @@ def validate(model):
     corrects = 0
     model.eval()
     for data, labels, seq_lens in val_dl:
+        data = data.to(device)
+        labels = labels.to(device)
+        
         bs = data.shape[0]
         out, acts  = model(data, seq_lens)
         _, idx = torch.max(out, dim=1)
@@ -57,6 +61,9 @@ def validate(model):
                         
 for i in tqdm(range(args.epoch)):
     for data, labels, seq_lens in train_dl:
+        data = data.to(device)
+        labels = labels.to(device)
+        
         optimizer.zero_grad()
         out = model(data, seq_lens)
         loss = criterion(out[0], labels) + args.ar*torch.mean(torch.pow(out[1], 2))

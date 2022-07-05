@@ -29,7 +29,7 @@ args = parser.parse_args()
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-model = get_model(n_letters, args.emb_size, args.hidden_size, n_categories, args.dropout).to*device
+model = get_model(n_letters, args.emb_size, args.hidden_size, n_categories, args.dropout).to(device)
 
 criterion = nn.CrossEntropyLoss()
 train_dl, val_dl = get_dl(args.bs)

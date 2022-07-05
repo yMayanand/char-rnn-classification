@@ -17,8 +17,8 @@ parser.add_argument('--bs', default=32, type=int, help='batch size for training'
 parser.add_argument('--lr', default=1e-3, type=float, help='controls learning rate of model')
 parser.add_argument('--opt', default='Adam', type=str, help='optimizer for training')
 
-parser.add_argument('--emb_size', default=32, type=int, help='embedding size')
-parser.add_argument('--hidden_size', default=64, type=int, help='hidden size')
+parser.add_argument('--emb_size', default=512, type=int, help='embedding size')
+parser.add_argument('--hidden_size', default=512, type=int, help='hidden size')
 
 parser.add_argument('--wd', default=0, type=float, help='weight decay parameter')
 parser.add_argument('--ar', default=0, type=float, help='activity regularisation constant')

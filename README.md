@@ -29,4 +29,4 @@ python predict.py --name wang --emb_size 512 --hidden_size 512
 * `--emb_size`: embedding size
 * `--hidden_size`: hidden layer size of lstm
 
-Note: checkpoint available in `./checkpoint` directory has `--emb_size` 512 and `--hidden_size` 512
+Note: checkpoint available in `./checkpoints` directory has `--emb_size` 512 and `--hidden_size` 512

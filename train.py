@@ -2,6 +2,7 @@ import time
 import random
 import math
 import argparse
+from rich.progress import track
 
 import torch
 from torch import nn, optim
@@ -82,7 +83,11 @@ def validate(model):
     return (corrects/tot)*100
            
                         
-for i in range(args.epoch):
+for i in track(
+    range(args.epoch),
+    description='training...',
+    transient=True
+):
     model.train()
     for data, labels, seq_lens in train_dl:
         data = data.to(device)
